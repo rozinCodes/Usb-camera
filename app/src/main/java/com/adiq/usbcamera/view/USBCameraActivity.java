@@ -79,11 +79,7 @@ public class USBCameraActivity extends AppCompatActivity implements CameraDialog
 
         public void onDetachDev(UsbDevice device) {
 
-//            if (isRequest) {
-//                isRequest = false;
-//                mCameraHelper.closeCamera();
-//                showShortMsg(device.getDeviceName() + " is out");
-//            }
+
         }
 
 
