@@ -98,7 +98,6 @@ public class USBCameraActivity extends AppCompatActivity implements CameraDialog
                 showShortMsg("Failed to connect to camera, please restart the application");
                 isPreview = false;
             } else {
-//                    Log.d("hello", device.getDeviceName());
                 isPreview = true;
 
                 recordVideo();
