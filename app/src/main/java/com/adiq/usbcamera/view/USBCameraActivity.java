@@ -99,7 +99,6 @@ public class USBCameraActivity extends AppCompatActivity implements CameraDialog
                 isPreview = false;
             } else {
 //                    Log.d("hello", device.getDeviceName());
-//                    Log.d("hello", device.getProductName());
                 isPreview = true;
 
                 recordVideo();
