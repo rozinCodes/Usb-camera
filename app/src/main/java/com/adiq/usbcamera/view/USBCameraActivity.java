@@ -121,12 +121,6 @@ public class USBCameraActivity extends AppCompatActivity implements CameraDialog
 
 //                String videoPath = UVCCameraHelper.ROOT_PATH + MyApplication.DIRECTORY_NAME + "/"
 //                        + "1667" + UVCCameraHelper.SUFFIX_MP4;
-//
-////                        UVCCameraHelper.ROOT_PATH + MyApplication.DIRECTORY_NAME + "/" + "test_new";
-//                RecordParams params = new RecordParams();
-//                params.setRecordPath(videoPath);
-//                params.setRecordDuration(20000);
-//                showShortMsg(videoPath);
             }
         }
 
