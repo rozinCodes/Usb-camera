@@ -113,14 +113,7 @@ public class USBCameraActivity extends AppCompatActivity implements CameraDialog
 //                }
 
 //
-//                StatFs stat = new StatFs(Environment.getDataDirectory().getPath());
-//                long bytesAvailable = (long) stat.getFreeBlocks() * (long) stat.getBlockSize();
-//                long megAvailable = bytesAvailable / 1048576;
 
-//                showShortMsg(String.valueOf(megAvailable));
-
-//                String videoPath = UVCCameraHelper.ROOT_PATH + MyApplication.DIRECTORY_NAME + "/"
-//                        + "1667" + UVCCameraHelper.SUFFIX_MP4;
             }
         }
 
