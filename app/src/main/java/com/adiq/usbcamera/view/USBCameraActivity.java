@@ -127,12 +127,6 @@ public class USBCameraActivity extends AppCompatActivity implements CameraDialog
 //                params.setRecordPath(videoPath);
 //                params.setRecordDuration(20000);
 //                showShortMsg(videoPath);
-
-
-//                Retrofit retrofit = new Retrofit.Builder().baseUrl("https://af63-103-169-159-101.in.ngrok.io/api/files/")
-//                        .addConverterFactory(GsonConverterFactory.create()).build();
-//                File file = new File(videoPath);
-//
             }
         }
 
