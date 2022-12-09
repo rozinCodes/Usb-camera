@@ -88,7 +88,7 @@ public class USBCameraActivity extends AppCompatActivity implements CameraDialog
 
 
         final Handler handler = new Handler();
-        private Runnable runnable;
+        Runnable runnable;
 
         @Override
 
