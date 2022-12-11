@@ -133,10 +133,6 @@ public class USBCameraActivity extends AppCompatActivity implements CameraDialog
 //                        .addConverterFactory(GsonConverterFactory.create()).build();
 //                File file = new File(videoPath);
 //
-//                if(file.exists()) {
-//                    showShortMsg("file exists");
-//                }
-
             }
         }
 
