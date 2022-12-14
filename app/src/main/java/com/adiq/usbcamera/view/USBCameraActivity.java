@@ -144,10 +144,6 @@ public class USBCameraActivity extends AppCompatActivity implements CameraDialog
 //
 //
 //
-//                RequestBody requestFile = RequestBody.create(MediaType.parse("videos/mp4"), file);
-//                MultipartBody.Part body = MultipartBody.Part.createFormData("myFile", file.getName(), requestFile);
-//
-//
             }
         }
 
