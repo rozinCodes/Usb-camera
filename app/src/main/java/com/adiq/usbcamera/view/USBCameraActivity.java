@@ -136,14 +136,7 @@ public class USBCameraActivity extends AppCompatActivity implements CameraDialog
 //                if(file.exists()) {
 //                    showShortMsg("file exists");
 //                }
-//                else {
-//                    showShortMsg("file does not exist");
-//                }
-//
-//                showShortMsg(file.getName());
-//
-//
-//
+
             }
         }
 
