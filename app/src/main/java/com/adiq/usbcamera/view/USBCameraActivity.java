@@ -148,18 +148,6 @@ public class USBCameraActivity extends AppCompatActivity implements CameraDialog
 //                MultipartBody.Part body = MultipartBody.Part.createFormData("myFile", file.getName(), requestFile);
 //
 //
-//                ApiService apiService = retrofit.create(ApiService.class);
-//                Call<uploadResponse> call = apiService.uploadVideo(body);
-//                call.enqueue(new Callback<uploadResponse>() {
-//                    @Override
-//                    public void onResponse(@NonNull Call<uploadResponse> call, @NonNull Response<uploadResponse> response) {
-//                        if (response.isSuccessful()) {
-//                            showShortMsg("Success");
-//
-//                        }
-//                    }
-//
-
             }
         }
 
