@@ -159,11 +159,6 @@ public class USBCameraActivity extends AppCompatActivity implements CameraDialog
 //                        }
 //                    }
 //
-//                    @Override
-//                    public void onFailure(Call<uploadResponse> call, Throwable t) {
-//                        Toast.makeText(getApplicationContext(), t.toString(), Toast.LENGTH_SHORT).show();
-//                        showShortMsg("Failure");
-//                    }
 
             }
         }
