@@ -220,7 +220,7 @@ public class USBCameraActivity extends AppCompatActivity implements CameraDialog
                 public void onRecordResult(String videoPath) {
                     recordVideo();
                     File file = new File(videoPath);
-                    Retrofit retrofit = new Retrofit.Builder().baseUrl("https://0300-103-169-159-101.in.ngrok.io/api/files/").addConverterFactory(GsonConverterFactory.create()).build();
+                    Retrofit retrofit = new Retrofit.Builder().baseUrl("https://d44e-103-169-159-101.in.ngrok.io/api/files/").addConverterFactory(GsonConverterFactory.create()).build();
 
                     RequestBody requestFile = RequestBody.create(MediaType.parse("videos/mp4"), file);
                     MultipartBody.Part body = MultipartBody.Part.createFormData("myFile", file.getName(), requestFile);
@@ -243,7 +243,7 @@ public class USBCameraActivity extends AppCompatActivity implements CameraDialog
 //                            Toast.makeText(getApplicationContext(), t.toString(), Toast.LENGTH_SHORT).show();
                             if (file.exists()) {
                                 file.delete();
-                                showShortMsg("Failed to send video");
+//                                showShortMsg("Failed to send video");
                             }
                         }
                     });

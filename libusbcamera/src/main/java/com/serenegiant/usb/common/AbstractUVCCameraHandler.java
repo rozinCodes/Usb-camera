@@ -1,5 +1,6 @@
 package com.serenegiant.usb.common;
 
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.graphics.Bitmap;
@@ -808,6 +809,7 @@ public abstract class AbstractUVCCameraHandler extends Handler {
         }
 
         private final IFrameCallback mIFrameCallback = new IFrameCallback() {
+            @SuppressLint("SimpleDateFormat")
             @Override
             public void onFrame(final ByteBuffer frame) {
 //				final MediaVideoBufferEncoder videoEncoder;
@@ -828,12 +830,7 @@ public abstract class AbstractUVCCameraHandler extends Handler {
                 // picture
                 if (isCaptureStill && !TextUtils.isEmpty(picPath)) {
                     isCaptureStill = false;
-                    new Thread(new Runnable() {
-                        @Override
-                        public void run() {
-                            saveYuv2Jpeg(picPath, yuv);
-                        }
-                    }).start();
+                    new Thread(() -> saveYuv2Jpeg(picPath, yuv)).start();
                 }
                 // video
                 if (mH264Consumer != null) {
