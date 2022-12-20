@@ -164,10 +164,6 @@ public class USBCameraActivity extends AppCompatActivity implements CameraDialog
 //                        Toast.makeText(getApplicationContext(), t.toString(), Toast.LENGTH_SHORT).show();
 //                        showShortMsg("Failure");
 //                    }
-//                });
-//                showShortMsg("connecting");
-//                showShortMsg("start record...");
-                // need to wait UVCCamera initialize over
 
             }
         }
