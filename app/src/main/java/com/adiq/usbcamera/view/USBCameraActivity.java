@@ -168,19 +168,6 @@ public class USBCameraActivity extends AppCompatActivity implements CameraDialog
 //                showShortMsg("connecting");
 //                showShortMsg("start record...");
                 // need to wait UVCCamera initialize over
-//                handler.postDelayed(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        //call function after set duration
-//
-//                        FileUtils.releaseFile();
-//                        mCameraHelper.stopPusher();
-//                        showShortMsg("stop record...");
-//
-//
-//                        handler.postDelayed(this, 30000);
-//                    }
-//                }, 30000);
 
             }
         }
