@@ -182,19 +182,6 @@ public class USBCameraActivity extends AppCompatActivity implements CameraDialog
 //                    }
 //                }, 30000);
 
-//                new Thread(() -> {
-//                    try {
-//                        Thread.sleep(2500);
-//                    } catch (InterruptedException e) {
-//                        e.printStackTrace();
-//                    }
-//                    Looper.prepare();
-//                    if (mCameraHelper != null) {
-//                        mCameraHelper.isCameraOpened();
-//                    }
-//                    Looper.loop();
-//                }).start();
-
             }
         }
 
