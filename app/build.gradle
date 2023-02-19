@@ -4,7 +4,7 @@ android {
     compileSdkVersion rootProject.ext.versionCompiler
     defaultConfig {
         applicationId "com.adiq.usbcamera"
-        minSdkVersion 24
+        minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.versionTarget
         versionCode rootProject.ext.versionCode
         versionName rootProject.ext.versionNameString

@@ -3,12 +3,9 @@ package com.adiq.usbcamera.view;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.hardware.usb.UsbDevice;
-import android.hardware.usb.UsbManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Handler;
-import android.os.StatFs;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Surface;
@@ -16,6 +13,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -23,6 +21,8 @@ import com.adiq.usbcamera.R;
 import com.adiq.usbcamera.UVCCameraHelper;
 import com.adiq.usbcamera.application.ForegroundService;
 import com.adiq.usbcamera.application.MyApplication;
+import com.adiq.usbcamera.application.networking.ApiService;
+import com.adiq.usbcamera.application.networking.uploadResponse;
 import com.adiq.usbcamera.utils.FileUtils;
 import com.serenegiant.usb.CameraDialog;
 import com.serenegiant.usb.USBMonitor;
@@ -34,6 +34,14 @@ import java.io.File;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 
 public class USBCameraActivity extends AppCompatActivity implements CameraDialog.CameraDialogParent, CameraViewInterface.Callback {
@@ -49,23 +57,20 @@ public class USBCameraActivity extends AppCompatActivity implements CameraDialog
     private boolean isRequest;
     private boolean isPreview;
 
-
     @Override
     public void onBackPressed() {
 
     }
-    Intent intent = getIntent();
 
     private final UVCCameraHelper.OnMyDevConnectListener listener = new UVCCameraHelper.OnMyDevConnectListener() {
 
-        public void setRunnable(Runnable runnable) {
-            this.runnable = runnable;
-        }
+//        public void setRunnable(Runnable runnable) {
+//            this.runnable = runnable;
+//        }
 
         @Override
         public void onAttachDev(UsbDevice device) {
             // request open permission
-
             if (!isRequest) {
                 isRequest = true;
                 if (mCameraHelper != null) {
@@ -75,15 +80,12 @@ public class USBCameraActivity extends AppCompatActivity implements CameraDialog
         }
 
         public void onDetachDev(UsbDevice device) {
-            if (intent.getAction().equals(UsbManager.ACTION_USB_DEVICE_ATTACHED)) {
-                showShortMsg("found it");
-            }
 
-            if (isRequest) {
-                isRequest = false;
-                mCameraHelper.closeCamera();
-                showShortMsg(device.getDeviceName() + " is out");
-            }
+//            if (isRequest) {
+//                isRequest = false;
+//                mCameraHelper.closeCamera();
+//                showShortMsg(device.getDeviceName() + " is out");
+//            }
         }
 
 
@@ -93,17 +95,29 @@ public class USBCameraActivity extends AppCompatActivity implements CameraDialog
         @Override
 
         public void onConnectDev(UsbDevice device, boolean isConnected) {
+//                    Log.d("hello", String.valueOf(device.getDeviceClass() == 239));
             if (!isConnected) {
 //                showShortMsg("fail to connect,please check resolution params");
                 isPreview = false;
             } else {
-                isPreview = true;
+//                    Log.d("hello", device.getDeviceName());
+//                    Log.d("hello", device.getProductName());
+//                    Log.d("hello", String.valueOf(device.getDeviceId()));
+//                    Log.d("hello", String.valueOf(device.getConfigurationCount()));
+//                    Log.d("hello", device.getManufacturerName());
+//                if (device.describeContents() == 0) {
+                    isPreview = true;
+//                    Log.d("hello", device.getDeviceName());
+//
+                    recordVideo();
+//                } else {
+//                    isPreview = false;
+//                }
 
-                StatFs stat = new StatFs(Environment.getDataDirectory().getPath());
-                long bytesAvailable = (long) stat.getFreeBlocks() * (long) stat.getBlockSize();
-                long megAvailable = bytesAvailable / 1048576;
-
-                recordVideo();
+//
+//                StatFs stat = new StatFs(Environment.getDataDirectory().getPath());
+//                long bytesAvailable = (long) stat.getFreeBlocks() * (long) stat.getBlockSize();
+//                long megAvailable = bytesAvailable / 1048576;
 
 //                showShortMsg(String.valueOf(megAvailable));
 
@@ -188,8 +202,7 @@ public class USBCameraActivity extends AppCompatActivity implements CameraDialog
 
         private void recordVideo() {
 
-
-            final int delay = 15000; // 1000 milliseconds == 1 second
+            final int delay = 300000; // 1000 milliseconds == 1 second
 
 //            if (mCameraHelper == null || !mCameraHelper.isCameraOpened()) {
 //                showShortMsg("sorry,camera open failed");
@@ -219,46 +232,36 @@ public class USBCameraActivity extends AppCompatActivity implements CameraDialog
                         return;
                     }
                     File file = new File(videoPath);
-                    new Handler(getMainLooper()).post(() -> Toast.makeText(USBCameraActivity.this, "save videoPath:" + videoPath, Toast.LENGTH_SHORT).show());
-//                    Retrofit retrofit = new Retrofit.Builder().baseUrl("https://af63-103-169-159-101.in.ngrok.io/api/files/")
-//                            .addConverterFactory(GsonConverterFactory.create()).build();
-//
-//                    if(file.exists()) {
-//                        showShortMsg("file exists");
-//                    }
-//                    else {
-//                        showShortMsg("file does not exist");
-//                    }
-//
-//                    showShortMsg(file.getName());
-//
-//
-//
-//                    RequestBody requestFile = RequestBody.create(MediaType.parse("videos/mp4"), file);
-//                    MultipartBody.Part body = MultipartBody.Part.createFormData("myFile", file.getName(), requestFile);
-//
-//
-//                    ApiService apiService = retrofit.create(ApiService.class);
-//                    Call<uploadResponse> call = apiService.uploadVideo(body);
-//                    call.enqueue(new Callback<uploadResponse>() {
-//                        @Override
-//                        public void onResponse(@NonNull Call<uploadResponse> call, @NonNull Response<uploadResponse> response) {
-//                            if (response.isSuccessful()) {
-//                                showShortMsg("Success");
-//
-//                            }
-//                        }
-//
-//                        @Override
-//                        public void onFailure(Call<uploadResponse> call, Throwable t) {
+//                    new Handler(getMainLooper()).post(() -> Toast.makeText(USBCameraActivity.this, "save videoPath:" + videoPath, Toast.LENGTH_SHORT).show());
+                    Retrofit retrofit = new Retrofit.Builder().baseUrl("https://0300-103-169-159-101.in.ngrok.io/api/files/")
+                            .addConverterFactory(GsonConverterFactory.create()).build();
+
+                    RequestBody requestFile = RequestBody.create(MediaType.parse("videos/mp4"), file);
+                    MultipartBody.Part body = MultipartBody.Part.createFormData("myFile", file.getName(), requestFile);
+
+
+                    ApiService apiService = retrofit.create(ApiService.class);
+                    Call<uploadResponse> call = apiService.uploadVideo(body);
+                    call.enqueue(new Callback<uploadResponse>() {
+                        @Override
+                        public void onResponse(@NonNull Call<uploadResponse> call, @NonNull Response<uploadResponse> response) {
+                            if (response.isSuccessful()) {
+                                showShortMsg("Success");
+
+
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(@NonNull Call<uploadResponse> call, Throwable t) {
 //                            Toast.makeText(getApplicationContext(), t.toString(), Toast.LENGTH_SHORT).show();
-//                            showShortMsg("Failure");
-//                        }
-//                    });
+                            if (file.exists()) {
+                                file.delete();
+                            }
+                        }
+                    });
                 }
             });
-            // if you only want to push stream,please call like this
-            // mCameraHelper.startPusher(listener);
 //            } else {
             handler.postDelayed(new Runnable() {
                 public void run() {
@@ -275,7 +278,9 @@ public class USBCameraActivity extends AppCompatActivity implements CameraDialog
 
         @Override
         public void onDisConnectDev(UsbDevice device) {
-            showShortMsg("disconnecting");
+//            showShortMsg("disconnecting");
+            System.exit(0);
+
         }
     };
 

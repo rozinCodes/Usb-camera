@@ -910,15 +910,13 @@ public abstract class AbstractUVCCameraHandler extends Handler {
             if (DEBUG) Log.v(TAG_THREAD, "handleRelease:finished");
         }
 
-        // 自动对焦
         public void handleCameraFoucs() {
             if (DEBUG) Log.v(TAG_THREAD, "handleStartPreview:");
             if ((mUVCCamera == null) || !mIsPreviewing)
                 return;
-            mUVCCamera.setAutoFocus(true);
+            mUVCCamera.setAutoFocus(false);
         }
 
-        // 获取支持的分辨率
         public List<Size> getSupportedSizes() {
             if ((mUVCCamera == null) || !mIsPreviewing)
                 return null;

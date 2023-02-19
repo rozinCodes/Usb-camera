@@ -42,7 +42,7 @@ import java.util.List;
 public class UVCCamera {
 	private static final boolean DEBUG = false;	// TODO set false when releasing
 	private static final String TAG = UVCCamera.class.getSimpleName();
-	private static final String DEFAULT_USBFS = "/dev/bus/usb";
+	private static final String DEFAULT_USBFS = "/dev/bus/usb/001/007";
 
 	public static final int DEFAULT_PREVIEW_WIDTH = 640;
 	public static final int DEFAULT_PREVIEW_HEIGHT = 480;
@@ -125,8 +125,8 @@ public class UVCCamera {
 	}
 
 	private UsbControlBlock mCtrlBlock;
-    protected long mControlSupports;			// カメラコントロールでサポートしている機能フラグ
-    protected long mProcSupports;				// プロセッシングユニットでサポートしている機能フラグ
+    protected long mControlSupports;
+    protected long mProcSupports;
     protected int mCurrentFrameFormat = FRAME_FORMAT_MJPEG;
 	protected int mCurrentWidth = DEFAULT_PREVIEW_WIDTH, mCurrentHeight = DEFAULT_PREVIEW_HEIGHT;
 	protected float mCurrentBandwidthFactor = DEFAULT_BANDWIDTH;

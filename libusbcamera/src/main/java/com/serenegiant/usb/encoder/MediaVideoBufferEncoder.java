@@ -23,6 +23,7 @@
 
 package com.serenegiant.usb.encoder;
 
+import android.annotation.SuppressLint;
 import android.media.MediaCodec;
 import android.media.MediaCodecInfo;
 import android.media.MediaCodecList;
@@ -60,6 +61,7 @@ public class MediaVideoBufferEncoder extends MediaEncoder implements IVideoEncod
 		encode(buffer, buffer.capacity());
     }
 
+	@SuppressLint("SuspiciousIndentation")
 	@Override
 	protected void prepare() throws IOException {
 		if (DEBUG) Log.i(TAG, "prepare: ");
