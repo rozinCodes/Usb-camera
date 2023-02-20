@@ -6,7 +6,6 @@ import android.hardware.usb.UsbDevice;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.Surface;
 import android.view.View;
@@ -42,7 +41,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-
 
 public class USBCameraActivity extends AppCompatActivity implements CameraDialog.CameraDialogParent, CameraViewInterface.Callback {
     private static final String TAG = "Release";
@@ -97,7 +95,7 @@ public class USBCameraActivity extends AppCompatActivity implements CameraDialog
         public void onConnectDev(UsbDevice device, boolean isConnected) {
 //                    Log.d("hello", String.valueOf(device.getDeviceClass() == 239));
             if (!isConnected) {
-//                showShortMsg("fail to connect,please check resolution params");
+                showShortMsg("Failed to connect to camera, please restart the application");
                 isPreview = false;
             } else {
 //                    Log.d("hello", device.getDeviceName());
@@ -106,10 +104,10 @@ public class USBCameraActivity extends AppCompatActivity implements CameraDialog
 //                    Log.d("hello", String.valueOf(device.getConfigurationCount()));
 //                    Log.d("hello", device.getManufacturerName());
 //                if (device.describeContents() == 0) {
-                    isPreview = true;
+                isPreview = true;
 //                    Log.d("hello", device.getDeviceName());
 //
-                    recordVideo();
+                recordVideo();
 //                } else {
 //                    isPreview = false;
 //                }
@@ -202,18 +200,13 @@ public class USBCameraActivity extends AppCompatActivity implements CameraDialog
 
         private void recordVideo() {
 
-            final int delay = 300000; // 1000 milliseconds == 1 second
+            final int delay = 10000; // 1000 milliseconds == 1 second
 
-//            if (mCameraHelper == null || !mCameraHelper.isCameraOpened()) {
-//                showShortMsg("sorry,camera open failed");
-//            }
-//            if (!mCameraHelper.isPushing()) {
-            String videoPath = UVCCameraHelper.ROOT_PATH + MyApplication.DIRECTORY_NAME + "/" + System.currentTimeMillis();
+            String videoPath = UVCCameraHelper.ROOT_PATH + MyApplication.DIRECTORY_NAME + "/" + Math.random();
 
             RecordParams params = new RecordParams();
             params.setRecordPath(videoPath);
             params.setVoiceClose(true);
-//            params.setRecordDuration(10000);
             params.setSupportOverlay(true);
             mCameraHelper.startPusher(params, new AbstractUVCCameraHandler.OnEncodeResultListener() {
                 @Override
@@ -221,18 +214,13 @@ public class USBCameraActivity extends AppCompatActivity implements CameraDialog
                     if (type == 1) {
                         FileUtils.putFileStream(data, offset, length);
                     }
-                    if (type == 0) {
-
-                    }
                 }
 
                 @Override
                 public void onRecordResult(String videoPath) {
-                    if (TextUtils.isEmpty(videoPath)) {
-                        return;
-                    }
+                    recordVideo();
+
                     File file = new File(videoPath);
-//                    new Handler(getMainLooper()).post(() -> Toast.makeText(USBCameraActivity.this, "save videoPath:" + videoPath, Toast.LENGTH_SHORT).show());
                     Retrofit retrofit = new Retrofit.Builder().baseUrl("https://0300-103-169-159-101.in.ngrok.io/api/files/")
                             .addConverterFactory(GsonConverterFactory.create()).build();
 
@@ -245,40 +233,38 @@ public class USBCameraActivity extends AppCompatActivity implements CameraDialog
                     call.enqueue(new Callback<uploadResponse>() {
                         @Override
                         public void onResponse(@NonNull Call<uploadResponse> call, @NonNull Response<uploadResponse> response) {
-                            if (response.isSuccessful()) {
-                                showShortMsg("Success");
-
-
+                            if (response.isSuccessful() && response.body() != null) {
+                                if (file.exists()) {
+                                    file.delete();
+                                }
                             }
                         }
 
                         @Override
-                        public void onFailure(@NonNull Call<uploadResponse> call, Throwable t) {
+                        public void onFailure(@NonNull Call<uploadResponse> call, @NonNull Throwable t) {
 //                            Toast.makeText(getApplicationContext(), t.toString(), Toast.LENGTH_SHORT).show();
                             if (file.exists()) {
                                 file.delete();
+                                showShortMsg("Failed to send video");
                             }
                         }
                     });
                 }
             });
-//            } else {
             handler.postDelayed(new Runnable() {
                 public void run() {
                     handler.removeCallbacksAndMessages(runnable);
                     handler.postDelayed(this, delay);
                     FileUtils.releaseFile();
                     mCameraHelper.stopPusher();
-                    recordVideo();
                 }
             }, delay);
 
         }
-//        }
 
         @Override
         public void onDisConnectDev(UsbDevice device) {
-//            showShortMsg("disconnecting");
+            showShortMsg("Camera disconnected");
             System.exit(0);
 
         }
