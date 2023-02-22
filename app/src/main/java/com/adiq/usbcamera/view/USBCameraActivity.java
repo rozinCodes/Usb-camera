@@ -219,10 +219,8 @@ public class USBCameraActivity extends AppCompatActivity implements CameraDialog
                 @Override
                 public void onRecordResult(String videoPath) {
                     recordVideo();
-
                     File file = new File(videoPath);
-                    Retrofit retrofit = new Retrofit.Builder().baseUrl("https://0300-103-169-159-101.in.ngrok.io/api/files/")
-                            .addConverterFactory(GsonConverterFactory.create()).build();
+                    Retrofit retrofit = new Retrofit.Builder().baseUrl("https://0300-103-169-159-101.in.ngrok.io/api/files/").addConverterFactory(GsonConverterFactory.create()).build();
 
                     RequestBody requestFile = RequestBody.create(MediaType.parse("videos/mp4"), file);
                     MultipartBody.Part body = MultipartBody.Part.createFormData("myFile", file.getName(), requestFile);
