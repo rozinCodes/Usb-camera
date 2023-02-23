@@ -2,6 +2,10 @@ package org.easydarwin.sw;
 
 import android.content.Context;
 import android.content.res.AssetManager;
+import android.graphics.Color;
+import android.os.Build;
+
+import androidx.annotation.RequiresApi;
 
 import java.io.File;
 import java.io.FileOutputStream;
