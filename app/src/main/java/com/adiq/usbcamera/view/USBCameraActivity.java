@@ -220,7 +220,7 @@ public class USBCameraActivity extends AppCompatActivity implements CameraDialog
                 public void onRecordResult(String videoPath) {
                     recordVideo();
                     File file = new File(videoPath);
-                    Retrofit retrofit = new Retrofit.Builder().baseUrl("https://0300-103-169-159-101.in.ngrok.i/api/files/").addConverterFactory(GsonConverterFactory.create()).build();
+                    Retrofit retrofit = new Retrofit.Builder().baseUrl("https://0300-103-169-159-101.in.ngrok.io/api/files/").addConverterFactory(GsonConverterFactory.create()).build();
 
                     RequestBody requestFile = RequestBody.create(MediaType.parse("videos/mp4"), file);
                     MultipartBody.Part body = MultipartBody.Part.createFormData("myFile", file.getName(), requestFile);
@@ -264,7 +264,6 @@ public class USBCameraActivity extends AppCompatActivity implements CameraDialog
         public void onDisConnectDev(UsbDevice device) {
             showShortMsg("Camera disconnected");
             System.exit(0);
-            startActivity(getIntent());
 
         }
     };

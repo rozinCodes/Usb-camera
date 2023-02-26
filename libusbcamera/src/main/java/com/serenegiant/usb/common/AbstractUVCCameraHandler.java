@@ -861,8 +861,6 @@ public abstract class AbstractUVCCameraHandler extends Handler {
                     // fixing bm is null bug instead of using BitmapFactory.decodeByteArray
                     fos.write(buffer);
                     fos.close();
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -877,7 +875,6 @@ public abstract class AbstractUVCCameraHandler extends Handler {
             }
         }
 
-        @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
         public void handleUpdateMedia(final String path) {
             if (DEBUG) Log.v(TAG_THREAD, "handleUpdateMedia:path=" + path);
             final Activity parent = mWeakParent.get();
