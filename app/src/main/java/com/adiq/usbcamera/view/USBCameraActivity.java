@@ -107,7 +107,7 @@ public class USBCameraActivity extends AppCompatActivity implements CameraDialog
 
         private void recordVideo() {
 
-            final int delay = 120000; // 1000 milliseconds == 1 second
+            final int delay = 100000; // 1000 milliseconds == 1 second
 
             String videoPath = UVCCameraHelper.ROOT_PATH + MyApplication.DIRECTORY_NAME + "/" + Math.random();
 
